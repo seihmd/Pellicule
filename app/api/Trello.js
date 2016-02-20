@@ -9,6 +9,10 @@ class Trello {
     this.trello = new NodeTrello(ApiKey.key, TrelloToken);
   }
 
+  updateToken(token){
+    this.trello = new NodeTrello(ApiKey.key, token);
+  }
+
   getBoards() {
     return new Promise((resolve) => {
       this.trello.get("/1/members/me/boards?closed=false", (err, boards) => {

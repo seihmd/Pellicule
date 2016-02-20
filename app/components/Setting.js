@@ -10,6 +10,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import Trello from '../api/Trello';
 import Config from '../utils/Config';
 import {ipcRenderer} from 'electron';
+import {getTrelloToken} from '../api/TrelloAuth';
 
 class Setting extends Component {
   constructor(props, context){
@@ -27,6 +28,15 @@ class Setting extends Component {
 
   toggleConnectTrello(e, toggled){
     this.setState({connectTrello: toggled});
+    if(toggled && !Config.userToken()){
+      getTrelloToken().then((token) => {
+        Config.userToken(token);
+        Trello.updateToken(token);
+        this.updateStateBoards();
+      });
+    } else if (toggled) {
+      this.updateStateBoards();
+    }
   }
 
   toggleTheme(e, toggled){
@@ -36,7 +46,18 @@ class Setting extends Component {
   handleBoardChange(e,i,boardId){
     if(this.state.selectedBoardId === boardId) return;
     this.setState({selectedBoardId:boardId});
+    this.updateStateLists(boardId);
+  }
 
+  updateStateBoards(){
+    Trello.getBoards().then(boards => {
+      this.setState({boards});
+      this.setState({selectedBoardId: boards[0].id});
+      this.updateStateLists(boards[0].id);
+    });
+  }
+
+  updateStateLists(boardId){
     Trello.getLists(boardId).then(lists => {
       let id_name_lists = [];
       lists.forEach(list => {
@@ -67,6 +88,9 @@ class Setting extends Component {
     Config.useDarkTheme(this.state.useDarkTheme);
     Config.selectedBoard(this.state.selectedBoardId);
     Config.selectedList(this.state.selectedListId);
+    if(!this.state.connectTrello){
+      Config.removeToken();
+    }
     ipcRenderer.send('reload');
   }
 

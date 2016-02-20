@@ -11,6 +11,7 @@ import DarkTheme from 'material-ui/lib/styles/raw-themes/dark-raw-theme';
 class SettingContainer extends Component {
   componentWillMount(){
     const {actions, setting} = this.props;
+    if(!setting.connectTrello) return;
     Trello.getBoards().then(boards => {
       actions.updateBoards(boards);
       const selectedBoardId = setting.selectedBoardId || boards[0].id;

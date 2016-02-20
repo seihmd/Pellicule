@@ -18,8 +18,6 @@ export default function settings(state = initialState, action) {
   switch (action.type) {
     case Types.SHOW_SETTING:
       return showSetting(state, action.show);
-    case Types.UPDATE_SETTINGS:
-      return state;
     case Types.UPDATE_USE_DARK_THEME:
       return updateUseDarkTheme(state, action.use);
     case Types.UPDATE_USE_TRELLO:
@@ -37,29 +35,10 @@ export default function settings(state = initialState, action) {
   }
 }
 
-function updateUseTrello(state, use){
-  let newState = Object.assign({}, state);
-  newState.connectTrello = use;
-  Config.useTrello(use);
-  return newState;
-  if(use && !Config.userToken()){
-    const token = getTrelloToken();
-    if(token){
-      Config.userToken(token);
-    }
-  }
-}
-
-function updateUseDarkTheme(state, useDark){
-  let newState = Object.assign({}, state);
-  newState.useDarkTheme = useDark;
-  Config.useDarkTheme(useDark);
-  return newState;
-}
-
 function updateBoards(state, boards){
   let newState = Object.assign({}, state);
   newState.boards = boards;
+  newState.connectTrello = true;
   if(!newState.selectedBoardId){
     newState.selectedBoardId = boards[0] ? boards[0].id : null;
     Config.selectedBoard(newState.selectedBoardId);
@@ -77,6 +56,7 @@ function updateSelectedBoard(state, boardId){
 function updateLists(state, lists){
   let newState = Object.assign({}, state);
   newState.lists = lists;
+  newState.connectTrello = true;
   if(!newState.selectedListId){
     newState.selectedListId = lists[0] ? lists[0].id : null;
     Config.selectedList(newState.selectedListId);

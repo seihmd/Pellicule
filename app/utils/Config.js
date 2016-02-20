@@ -32,11 +32,14 @@ class Config {
 
   userToken(token){
     if(token !== undefined){
-      this.settings[this.key.USER_TOKEN] = token;
-      this.updateConfig();
+      localStorage.setItem(this.key.USER_TOKEN, token);
     } else {
       return localStorage.getItem(this.key.USER_TOKEN) || '';
     }
+  }
+
+  removeToken(){
+    localStorage.removeItem(this.key.USER_TOKEN);
   }
 
   selectedBoard(boardId) {
