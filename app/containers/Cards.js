@@ -20,7 +20,8 @@ class CardsContainer extends Component {
         {cards.map((d) => {
           return <Card key={d.id} data={d}
                 remove={actions.removeCard}
-                update={actions.updateCard} />
+                update={actions.updateCard}
+                updateCheckList={actions.updateCheckList} />
         })}
       </div>
     )

@@ -30,9 +30,10 @@ export function updateCard(card){
   }
 }
 
-export function changeChecked(card){
+export function updateCheckList(cardId, checkList){
   return {
-    type: Types.CHANGE_CHECKED,
-    card
+    type: Types.UPDATE_CHECKLIST,
+    cardId,
+    checkList
   }
 }

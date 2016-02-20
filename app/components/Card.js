@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import TextArea from './TextArea';
+import CheckList from './CheckList';
 import styles from './Card.module.css';
 import ClassNames from 'classnames';
 
@@ -8,7 +9,8 @@ class Card extends Component {
     super(props, context);
     this.state = {
       editing : false,
-      mouseOver: false
+      mouseOver: false,
+      checkListEditing: false
     }
   }
 
@@ -24,7 +26,7 @@ class Card extends Component {
     this.setState({editing: true})
   }
 
-  handleUpdate(text){
+  handleTextUpdate(text){
     if(text.length === 0){
       this.handleRemove();
     } else {
@@ -34,27 +36,24 @@ class Card extends Component {
     }
   }
 
-  handleCheckedChanged(e, checkId){
-    const {id, text, due, checkList} = this.props.data;
-    checkList.map((c) => {
-      return c.checked = c.id === checkId ? e.target.checked : c.checked;
-    });
-    this.props.update({id,text,checkList,due});
-  }
-
-  handleUseCheck(){
-    console.log('here');
+  handleToggleEditCheck(){
+    this.setState({checkListEditing: !this.state.checkEditing});
   }
 
   handleMouseEnter(e){
+    e.stopPropagation();
+    e.preventDefault();
     this.setState({mouseOver: true});
   }
   handleMouseLeave(e){
+    e.stopPropagation();
+    e.preventDefault();
     this.setState({mouseOver: false});
+    setTimeout(()=>{this.setState({checkListEditing: false})}, 1000);
   }
 
   render() {
-    const { data, update, remove } = this.props;
+    const { data, update, remove, updateCheckList } = this.props;
     return (
       <div className={styles.container}
         onMouseEnter={this.handleMouseEnter.bind(this)}
@@ -63,9 +62,10 @@ class Card extends Component {
           <div className={styles.text} onDoubleClick={this.handleDoubleClick.bind(this)}>
             {this.renderText()}
           </div>
-          <div className={styles.checkList}>
-            {this.renderCheckList()}
-          </div>
+          <CheckList cardId={data.id}
+            list={data.checkList}
+            editing={this.state.checkListEditing}
+            onSave={(cardId,list)=>{updateCheckList(cardId,list)}}/>
           <div className={styles.due}>
             {this.renderDue()}
           </div>
@@ -78,25 +78,10 @@ class Card extends Component {
   renderText(){
     const text = this.props.data.text;
     if(this.state.editing){
-      return (<TextArea text={text} onSave={(text) => { this.handleUpdate(text)} } />)
+      return (<TextArea text={text} onSave={(text) => { this.handleTextUpdate(text)} } />)
     } else {
       return text;
     }
-  }
-
-  renderCheckList(){
-    const {checkList} = this.props.data;
-    return checkList.map((c) => {
-      return (
-        <label>
-          <input type="checkbox" key={c.id}
-            checked={c.checked}
-            onChange={ (e) => {this.handleCheckedChanged(e, c.id)} } />
-          {c.text}
-          <br/>
-        </label>
-      )
-    })
   }
 
   renderDue(){
@@ -122,13 +107,14 @@ class Card extends Component {
 
   renderIcons(){
     if (!this.state.mouseOver) return null;
+    // const useCheck = this.state.useCheck ? styles.useCheck : null;
     const { icon, removeIcon, checkIcon } = styles;
     return (
       <div>
         <i className={ClassNames('fa', 'fa-trash-o', icon, removeIcon)}
           onClick={this.handleRemove.bind(this)}></i>
         <i className={ClassNames('fa', 'fa-check-circle-o', icon, checkIcon)}
-          onClick={this.handleUseCheck.bind(this)}></i>
+          onClick={this.handleToggleEditCheck.bind(this)}></i>
       </div>
     )
   }
