@@ -13,9 +13,6 @@ class CheckList extends Component {
       editing: this.props.editing || false
     };
   }
-  static props = {
-    onSave: PropTypes.func.isRequired,
-  };
 
   componentWillReceiveProps(newProps){
     const {list, editing} = newProps;
@@ -42,7 +39,7 @@ class CheckList extends Component {
   handleUpdate(){
     const blankExcludedList = this.excludeBlank(this.state.list);
     this.setState({list: blankExcludedList})
-    this.props.onSave(this.props.cardId, this.props.checkListsId, blankExcludedList);
+    this.props.onUpdate(this.props.cardId, this.props.checkListsId, blankExcludedList);
   }
 
   handleTextChange(i, e){
@@ -64,7 +61,7 @@ class CheckList extends Component {
 
   handleKeyDown(e){
     if(e.which !== 13) return;
-    this.handleUpdate();
+    this.props.onEndEdit();
   }
 
   handleAddList(list){

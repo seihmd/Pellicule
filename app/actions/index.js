@@ -31,10 +31,11 @@ export function updateCard(cardId, text){
   }
 }
 
-export function updateCheckList(cardId, checkList){
+export function updateCheckList(cardId, checkListId, checkList){
   return {
     type: Types.UPDATE_CHECKLIST,
     cardId,
+    checkListId,
     checkList
   }
 }

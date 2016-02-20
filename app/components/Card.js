@@ -27,8 +27,7 @@ class Card extends Component {
     this.setState({editing: true})
   }
 
-  handleCheckListUpdate(cardId, checkListId, checkList){
-    this.props.updateCheckList(cardId, checkListId, checkList);
+  handleEndEditCheckList(){
     this.setState({editing: false});
   }
 
@@ -85,7 +84,8 @@ class Card extends Component {
         checkListsId={data.checkListsId}
         list={data.checkList}
         editing={this.state.editing}
-        onSave={this.handleCheckListUpdate.bind(this)}/>
+        onEndEdit={this.handleEndEditCheckList.bind(this)}
+        onUpdate={this.props.updateCheckList}/>
     )
   }
 
