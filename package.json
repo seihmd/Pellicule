@@ -1,8 +1,8 @@
 {
-  "name": "Pellicule",
-  "productName": "Pellicule",
-  "version": "0.0.1",
-  "description": "Electron application for desktop trello ",
+  "name": "electron-react-boilerplate",
+  "productName": "ElectronReact",
+  "version": "0.7.0",
+  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
   "main": "main.js",
   "scripts": {
     "test": "better-npm-run test",
@@ -107,6 +107,7 @@
     "extract-text-webpack-plugin": "^0.9.1",
     "fbjs-scripts": "^0.5.0",
     "jsdom": "^7.0.2",
+    "json-loader": "^0.5.4",
     "minimist": "^1.2.0",
     "mocha": "^2.3.0",
     "node-libs-browser": ">= 0.4.0 <=0.6.0",
@@ -134,14 +135,18 @@
   "dependencies": {
     "electron-debug": "^0.5.1",
     "font-awesome": "^4.4.0",
-    "history": "^1.17.0",
+    "history": "~1.13.0",
+    "jquery": "^2.1.4",
+    "node-trello": "^1.1.2",
     "react": "^0.14.2",
     "react-dom": "^0.14.2",
     "react-redux": "^4.0.0",
-    "react-router": "^1.0.3",
+    "react-router": "^1.0.0",
     "redux": "^3.0.4",
     "redux-promise": "^0.5.0",
-    "redux-thunk": "^1.0.0"
+    "redux-thunk": "^1.0.0",
+    "request": "^2.67.0",
+    "scriptjs": "^2.5.8"
   },
   "devEngines": {
     "node": "4.x || 5.x",
