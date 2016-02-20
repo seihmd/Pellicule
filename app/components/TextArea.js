@@ -6,7 +6,7 @@ class TextArea extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = {
-      text: ''
+      text: this.props.text || ''
     }
   }
 

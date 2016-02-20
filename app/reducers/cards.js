@@ -37,3 +37,12 @@ function removeCard(state, id) {
     return card.id !== id;
   });
 }
+
+function updateCard(state, editCard) {
+  let s = state.map( card => {
+    return card.id === editCard.id
+         ? Object.assign({}, editCard)
+         : card
+    });
+  return s
+}

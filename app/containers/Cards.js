@@ -7,7 +7,6 @@ import * as Actions from '../actions/index';
 class CardsContainer extends Component {
   render() {
     const {cards, actions} = this.props;
-    console.log(this.props);
     return (
       <div>
         {cards.map((d) => {

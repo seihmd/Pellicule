@@ -22,8 +22,9 @@ export function removeCard(id) {
   }
 }
 
-export function updateCard(){
+export function updateCard(card){
   return {
-    type: Types.UPDATE_CARD
+    type: Types.UPDATE_CARD,
+    card
   }
 }
