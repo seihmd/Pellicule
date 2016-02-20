@@ -52,6 +52,10 @@ class Card extends Component {
     }, 1000);
   }
 
+  handleRemove(){
+    this.props.remove(this.props.data.id);
+  }
+
   render() {
     const { data, update, remove } = this.props;
     const cardStyle = {
