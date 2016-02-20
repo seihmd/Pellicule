@@ -1,5 +1,4 @@
 import { CANCEL_NEWCARD } from '../utils/ActionTypes';
-import util from '../utils/util'
 
 const initialState = {
   text: '',

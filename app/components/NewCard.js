@@ -5,9 +5,6 @@ import TextArea from './TextArea';
 class NewCard extends Component {
   constructor(props, context){
     super(props, context);
-    this.state = {
-      text: this.props.newCard.text || ''
-    }
   }
 
   static props = {
@@ -18,26 +15,16 @@ class NewCard extends Component {
     this.state.text = text;
   }
 
-  handleSubmit(e){
-    if(e.which !== 13) return;
-    console.log('newcard submit');
-    const text = e.target.value.trim();
-    if(text !== ''){
+  handleSubmit(text){
+    if(text.length){
       this.props.createNew({text:text, isLocal: true});
-      this.state.text = '';
-    } else {
-      // none to done?
     }
   }
 
   render() {
-    console.log(this.props);
-    const { newCard, createNew } = this.props;
-    console.log(createNew);
     return (
-      <div className={styles.add_button}
-           onKeyDown={this.handleSubmit.bind(this)} >
-        <TextArea text={this.state.text}/>
+      <div className={styles.add_button} >
+        <TextArea onSave={(text)=>{this.handleSubmit(text)}} />
       </div>
     );
   }
