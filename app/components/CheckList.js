@@ -28,12 +28,18 @@ class CheckList extends Component {
     }
   }
 
+  excludeBlank(list){
+    return list.filter( c => {return c.text !== ''});
+  }
+
   hasNoRoom(checkList){
     return checkList.length === 0 || checkList[checkList.length-1].text !== '';
   }
 
   handleUpdate(){
-    this.props.onSave(this.props.cardId, this.state.list);
+    const blankExcludedList = this.excludeBlank(this.state.list);
+    this.setState({list: blankExcludedList})
+    this.props.onSave(this.props.cardId, blankExcludedList);
   }
 
   handleTextChange(i, e){
