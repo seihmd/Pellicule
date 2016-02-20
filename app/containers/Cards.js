@@ -8,9 +8,9 @@ import * as Actions from '../actions/index';
 class CardsContainer extends Component {
   componentWillMount(){
     const {actions} = this.props;
-    // Data.getTrelloCards().then((cards) => {
-    //   actions.addSomeCards(cards);
-    // });
+    Data.getTrelloCards().then((cards) => {
+      actions.addSomeCards(cards);
+    });
   }
 
   render() {

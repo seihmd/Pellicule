@@ -1,22 +1,22 @@
 import * as Types from '../utils/ActionTypes';
 import * as Data from '../api/Data';
 
-const initialState = Data.getLocalCards();
-// const initialState = [{
-//   id: 1,
-//   text: 'hello Pellicule',
-//   due: '2015-12-28T03:00:00.000Z',
-//   checkList: [{
-//     id: 1,
-//     text: 'this is unchecked',
-//     checked: false
-//   }, {
-//     id: 2,
-//     text: 'this is checked',
-//     checked: true
-//   }],
-//   isLocal: true
-// }]
+// const initialState = Data.getLocalCards();
+const initialState = [{
+  id: 1,
+  text: 'hello Pellicule',
+  due: '2015-12-28T03:00:00.000Z',
+  checkList: [{
+    id: 1,
+    text: 'this is unchecked',
+    checked: false
+  }, {
+    id: 2,
+    text: 'this is checked',
+    checked: true
+  }],
+  isLocal: true
+}]
 
 export default function cards(state = initialState, action) {
   switch (action.type) {

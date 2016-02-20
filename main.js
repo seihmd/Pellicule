@@ -2,15 +2,20 @@
 'use strict';
 
 const electron = require('electron');
+// const {app, BrowserWindow, Menu, Tray, crashReporter, shell, ipcMain} = electron;
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const Menu = electron.Menu;
+const Tray = electron.Tray;
 const crashReporter = electron.crashReporter;
 const shell = electron.shell;
+const ipcMain = electron.ipcMain;
+
 let menu;
 let template;
 let mainWindow = null;
-
+let settingWindow = null;
+let appIcon = null;
 
 crashReporter.start();
 
@@ -18,14 +23,43 @@ if (process.env.NODE_ENV === 'development') {
   require('electron-debug')();
 }
 
-
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
 
+function openSetting(){
+  if(!mainWindow) {
+    console.log('mainwindow null');
+    return;
+  }
+
+  mainWindow.webContents.send('testtestes', 'test');
+}
 
 app.on('ready', () => {
-  mainWindow = new BrowserWindow({ width: 1024, height: 728 });
+  appIcon = new Tray('./icon.png');
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: 'View',
+      type: 'normal',
+      selector: 'hide:'
+    },
+    {
+      label: 'Setting',
+      type: 'normal',
+      click: openSetting
+    }
+  ]);
+  appIcon.setToolTip('Pellicule');
+  appIcon.setContextMenu(contextMenu);
+  mainWindow = new BrowserWindow({
+     width: 1024,
+     height: 728,
+    //  transparent: true,
+    //  frame: false,
+     x: 9999,
+     y: 0
+   });
 
   if (process.env.HOT) {
     mainWindow.loadURL(`file://${__dirname}/app/hot-dev-app.html`);
@@ -43,38 +77,6 @@ app.on('ready', () => {
 
   if (process.platform === 'darwin') {
     template = [{
-      label: 'Electron',
-      submenu: [{
-        label: 'About ElectronReact',
-        selector: 'orderFrontStandardAboutPanel:'
-      }, {
-        type: 'separator'
-      }, {
-        label: 'Services',
-        submenu: []
-      }, {
-        type: 'separator'
-      }, {
-        label: 'Hide ElectronReact',
-        accelerator: 'Command+H',
-        selector: 'hide:'
-      }, {
-        label: 'Hide Others',
-        accelerator: 'Command+Shift+H',
-        selector: 'hideOtherApplications:'
-      }, {
-        label: 'Show All',
-        selector: 'unhideAllApplications:'
-      }, {
-        type: 'separator'
-      }, {
-        label: 'Quit',
-        accelerator: 'Command+Q',
-        click() {
-          app.quit();
-        }
-      }]
-    }, {
       label: 'Edit',
       submenu: [{
         label: 'Undo',
