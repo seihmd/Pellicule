@@ -1,21 +1,30 @@
 import * as Types from '../utils/ActionTypes';
+import * as Data from '../api/Data';
 
-const initialState = [{
-    id: 0,
-    text: "Hello! Pellicule!!",
-    boardId: 0
-  }];
+const initialState = Data.getLocalCards();
+
+// const initialState = [{
+//   id: 0,
+//   text: "welcome to Pellicule",
+//   boardId: 0
+// }];
 
 export default function cards(state = initialState, action) {
   switch (action.type) {
     case Types.LOAD_CARDS:
-      return state;
+      return Data.getLocalCards();
     case Types.ADD_CARD:
-      return addCard(state, action.newCard);
+      state = addCard(state, action.newCard);
+      Data.updateLocalCards(state);
+      return state;
     case Types.REMOVE_CARD:
-      return removeCard(state, action.id);
+      state = removeCard(state, action.id);
+      Data.updateLocalCards(state);
+      return state;
     case Types.UPDATE_CARD:
-      return updateCard(state, action.card)
+      state = updateCard(state, action.card)
+      Data.updateLocalCards(state);
+      return state;
     default:
       return state;
   }
@@ -39,10 +48,9 @@ function removeCard(state, id) {
 }
 
 function updateCard(state, editCard) {
-  let s = state.map( card => {
+  return state.map( card => {
     return card.id === editCard.id
          ? Object.assign({}, editCard)
          : card
     });
-  return s
 }
