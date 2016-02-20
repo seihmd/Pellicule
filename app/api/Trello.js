@@ -1,29 +1,37 @@
-import TrelloToken from './TrelloAuth';
 import ApiKey from './ApiKey';
 import NodeTrello from 'node-trello';
+import Config from '../utils/Config';
 import Promise from 'promise';
 
 class Trello {
   constructor() {
+    const TrelloToken = Config.userToken();
     this.trello = new NodeTrello(ApiKey.key, TrelloToken);
   }
 
   getBoards() {
-    this.trello.get("/1/members/me/boards?closed=false", (err, boards) => {
-      if (err) throw err;
-      console.log(boards);
-      return boards.filter((b) => {
-        return !b.closed;
+    return new Promise((resolve) => {
+      this.trello.get("/1/members/me/boards?closed=false", (err, boards) => {
+        if (err) throw err;
+        boards = boards.filter((b) => {
+          return !b.closed;
+        });
+        // console.log(boards);
+        resolve(boards);
       });
-    });
+    })
   }
 
   getLists(boardId) {
-    this.trello.get(`/1/boards/${boardId}/lists?cards=open`, (err, lists) => {
-      if (err) throw err;
-      console.log(lists.filter((l) => {
-        return !l.closed;
-      }));
+    return new Promise((resolve) => {
+      this.trello.get("/1/boards/"+boardId+"/lists?", (err, lists) => {
+        // console.log(err, lists);
+        if (err) throw err;
+        lists = lists.filter((l) => {
+          return !l.closed;
+        });
+        resolve(lists);
+      });
     });
   }
 

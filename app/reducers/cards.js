@@ -21,6 +21,11 @@ const initialState = [{
 export default function cards(state = initialState, action) {
   switch (action.type) {
     case Types.ADD_SOME_CARDS:
+      action.cards.forEach(card => {
+        if(!card.checkList){
+          card.checkList = [];
+        }
+      })
       return [...action.cards, ...state];
 
     case Types.ADD_CARD:
@@ -41,6 +46,7 @@ export default function cards(state = initialState, action) {
     case Types.UPDATE_CHECKLIST:
       state = updateCheckList(state, action.cardId, action.checkList);
       Data.updateLocalCards(state)
+
     default:
       return state;
   }

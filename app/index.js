@@ -6,16 +6,14 @@ import routes from './routes';
 import configureStore from './store/configureStore';
 import './app.css';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import {ipcRenderer, remote} from 'electron';
+import {ipcRenderer} from 'electron';
+import {showSetting} from './actions/settingActions';
 
 const store = configureStore();
 injectTapEventPlugin();
 
-ipcRenderer.on('testtestes', (e, msg) => {
-  console.log(msg);
-  // const BrowserWindow = remote.BrowserWindow;
-  // const window = new BrowserWindow({width: 400, height: 600});
-  // window.on('closed', ()=>{window = null;});
+ipcRenderer.on('show-setting', (e, msg) => {
+  store.dispatch(showSetting(true));
 })
 
 render(

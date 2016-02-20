@@ -6,7 +6,8 @@ import * as Actions from '../actions/index';
 
 class NewCardContainer extends Component {
   render() {
-    const { newCard, cards, actions } = this.props;
+    const { newCard, cards, actions, setting } = this.props;
+    if(setting.showSetting) return null;
     return (
       <NewCard
         newCard={newCard}
@@ -20,6 +21,7 @@ function mapStateToProps(state) {
   return {
     newCard: state.newCard,
     cards  : state.cards,
+    setting: state.setting,
   };
 }
 

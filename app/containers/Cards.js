@@ -14,7 +14,8 @@ class CardsContainer extends Component {
   }
 
   render() {
-    const {cards, actions} = this.props;
+    const {cards, actions, setting} = this.props;
+    if(setting.showSetting) return null;
     return (
       <div>
         {cards.map((d) => {
@@ -30,7 +31,8 @@ class CardsContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    cards  : state.cards
+    cards  : state.cards,
+    setting: state.setting,
   };
 }
 

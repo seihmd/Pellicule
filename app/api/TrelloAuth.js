@@ -1,8 +1,7 @@
 import ApiKey from './ApiKey';
 const TOKEN_KEY = 'user_token';
-export default localStorage.getItem(TOKEN_KEY) || TrelloToken();
 
-function TrelloToken() {
+export function getTrelloToken() {
   const remote = require('electron').remote;
   const BrowserWindow = remote.BrowserWindow;
   const redirect = 'https%3A%2F%2Fdevelopers.trello.com/';
@@ -20,9 +19,6 @@ function TrelloToken() {
     var raw_code = /#token=([^&]*)/.exec(returnUrl) || null,
       accessToken = (raw_code && raw_code.length > 1) ? raw_code[1] : null,
       error = /\?error=(.+)$/.exec(returnUrl);
-    if (accessToken) {
-      window.localStorage.setItem(TOKEN_KEY, accessToken);
-    }
     win.close();
     return accessToken;
   });

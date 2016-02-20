@@ -98,8 +98,7 @@ class Card extends Component {
   renderText(){
       const text = this.props.data.text;
       const cardTextStyle={
-        fontSize: '18px',
-        color: 'white'
+        fontSize: '18px'
       }
       if(this.state.editing){
         return (<TextArea text={text} onSave={(text) => { this.handleTextUpdate(text)} } />)

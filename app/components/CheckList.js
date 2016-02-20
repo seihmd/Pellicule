@@ -34,7 +34,7 @@ class CheckList extends Component {
     }
   }
   componentWillUpdate(newProps){
-    const {editing, list} = newProps;
+    let {editing, list} = newProps;
     if(editing && this.hasNoRoom(list)){
       this.handleAddList(list);
     }
@@ -84,6 +84,7 @@ class CheckList extends Component {
   render() {
     const { editing } = this.props;
     const { list } = this.state;
+    // if(!list) return null;
     return (
       <div>
         {list.map((c,i)=>{
