@@ -2,15 +2,18 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Card from '../components/Card';
-import * as actions from '../actions/index.js';
+import * as Actions from '../actions/index';
 
 class CardsContainer extends Component {
   render() {
-    const {cards} = this.props;
+    const {cards, actions} = this.props;
+    console.log(this.props);
     return (
       <div>
         {cards.map((d) => {
-          return <Card key={d.id} data={d} />
+          return <Card key={d.id} data={d}
+                remove={actions.removeCard}
+                update={actions.updateCard} />
         })}
       </div>
     )
@@ -24,7 +27,9 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({actions}, dispatch);
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardsContainer);

@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import CardsReducer from '../reducers/cards';
-import NewCardReducer from '../reducers/newCard';
 import NewCard from '../components/NewCard';
-import * as Actions from '../actions/index.js';
+import * as Actions from '../actions/index';
 
 class NewCardContainer extends Component {
   render() {

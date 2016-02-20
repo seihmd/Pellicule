@@ -1,5 +1,4 @@
-import { LOAD_CARDS, ADD_CARD, REMOVE_CARD } from '../utils/ActionTypes';
-// import {addCard, removeCard} from '../utils/util'
+import * as Types from '../utils/ActionTypes';
 
 const initialState = [{
     id: 0,
@@ -9,12 +8,14 @@ const initialState = [{
 
 export default function cards(state = initialState, action) {
   switch (action.type) {
-    case LOAD_CARDS:
+    case Types.LOAD_CARDS:
       return state;
-    case ADD_CARD:
+    case Types.ADD_CARD:
       return addCard(state, action.newCard);
-    case REMOVE_CARD:
-      return removeCard(state, 0);
+    case Types.REMOVE_CARD:
+      return removeCard(state, action.id);
+    case Types.UPDATE_CARD:
+      return updateCard(state, action.card)
     default:
       return state;
   }
@@ -33,6 +34,6 @@ function addCard(state, card) {
 
 function removeCard(state, id) {
   return state.filter((card) => {
-    card.id !== id;
+    return card.id !== id;
   });
 }

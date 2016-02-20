@@ -16,12 +16,20 @@ class Card extends Component {
     this.setState({editing: false})
   }
 
+  handleRemove(){
+    this.props.remove(this.props.data.id);
+  }
+
   render() {
-    console.log(this.props);
-    const { data } = this.props;
+    const { data, update, remove } = this.props;
     return (
       <div className={styles.card}>
-        {data.text}
+        <div>
+          {data.text}
+        </div>
+        <div>
+          <input type="button" onClick={this.handleRemove.bind(this)} />
+        </div>
       </div>
     );
   }
