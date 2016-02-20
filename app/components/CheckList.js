@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import TextField from 'material-ui/lib/text-field';
 import Checkbox from 'material-ui/lib/checkbox';
+import IconButton from 'material-ui/lib/icon-button';
+import ClassNames from 'classnames';
+import styles from './CheckList.module.css';
 
 class CheckList extends Component {
   constructor(props, context){
@@ -9,18 +12,6 @@ class CheckList extends Component {
       list: this.props.list || [],
       editing: this.props.editing || false
     };
-    this.checkLabelStyle ={
-      fontSize: '15px'
-    }
-    this.checkTextStyle={
-      width: '235px',
-      fontSize: '15px',
-      margin: '0 20px',
-      marginTop:'0',
-      marginBottom:'0',
-      height: '30px',
-      verticalAlign:'-webkit-baseline-middle'
-    }
   }
   static props = {
     onSave: PropTypes.func.isRequired,
@@ -81,10 +72,15 @@ class CheckList extends Component {
     this.setState({list});
   }
 
+  removeCheckItem(i){
+    let list = this.state.list;
+    list.splice(i,1);
+    this.setState({list});
+  }
+
   render() {
     const { editing } = this.props;
     const { list } = this.state;
-    // if(!list) return null;
     return (
       <div>
         {list.map((c,i)=>{
@@ -101,17 +97,25 @@ class CheckList extends Component {
   renderCheckbox(checkbox,i,editing){
     if(editing){
       return (
-        <TextField
-          style={this.checkTextStyle}
-          hintText={"checklist"}
-          value={checkbox.text}
-          onChange={this.handleTextChange.bind(this, i)}
-          onKeyDown={this.handleKeyDown.bind(this)} />
+        <div className={styles.editCheckItem}>
+          <TextField
+            className={styles.text}
+            hintText={"checklist"}
+            value={checkbox.text}
+            onChange={this.handleTextChange.bind(this, i)}
+            onKeyDown={this.handleKeyDown.bind(this)} />
+          <IconButton iconClassName="material-icons"
+            className={styles.removeCheckItem}
+            onClick={()=>{this.removeCheckItem(i)}}
+            tabIndex={-1} >
+            <i style={{fontSize:"15px"}} className={ClassNames('fa','fa-times')}></i>
+          </IconButton>
+        </div>
       )
     } else {
       return (
         <Checkbox
-          labelStyle={this.checkLabelStyle}
+          labelStyle={{fontSize: "15px"}}
           checked={checkbox.checked}
           onCheck={this.handleCheckedChanged.bind(this, i)}
           label={checkbox.text} />

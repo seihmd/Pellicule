@@ -1,0 +1,22 @@
+.editCheckItem {
+  position: relative;
+  height: 40px;
+  font-size: 5px;
+}
+
+.removeCheckItem {
+  padding: 0 !important;
+  width: 20px !important;
+  height: 20px !important;
+  position: absolute;
+  right: -250px;
+  top: -40px;
+}
+
+.text {
+  margin: 0 10px;
+}
+
+.label {
+  font-size: 15px;
+}
