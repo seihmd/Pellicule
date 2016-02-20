@@ -1,8 +1,9 @@
 import * as Types from '../utils/ActionTypes';
 
-export function loadCards() {
+export function addSomeCards(cards) {
   return {
-    type: Types.LOAD_CARDS
+    type: Types.ADD_SOME_CARDS,
+    cards
   };
 }
 
