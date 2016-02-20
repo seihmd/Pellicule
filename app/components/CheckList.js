@@ -55,32 +55,39 @@ class CheckList extends Component {
   }
 
   render() {
-    const { list } = this.props;
-    if(this.state.editing && list.length === 0){
+    const { list, editing } = this.props;
+    if(editing && list.length === 0){
       list.push({text: '', checked: false});
     }
     return (
       <div>
         {list.map((c,i)=>{
-          return (<div key={i}>{this.renderCheckList(c,i)}</div>)
+          return (
+            <div key={i}>
+              {this.renderCheckList(c.checked,i,editing)}
+              {this.renderText(c.text,i,editing)}
+            </div>
+
+        )
         })}
       </div>
     );
   }
 
-  renderCheckList(c,i){
-    return (
-      <label>
-        <input type="checkbox" idx={i}
-          checked={c.checked}
-          onChange={this.handleCheckedChanged.bind(this, i)} />
-        {this.renderText(c.text,i)}
-      </label>
-    )
+  renderCheckList(checked,i,editing){
+    if(!editing){
+      return (
+        <label>
+          <input type="checkbox" idx={i}
+            checked={checked}
+            onChange={this.handleCheckedChanged.bind(this, i)} />
+        </label>
+      )
+    }
   }
 
-  renderText(text,i){
-    if(this.props.editing){
+  renderText(text,i,editing){
+    if(editing){
       return (
         <input type="text" value={text} idx={i}
           onChange={this.handleTextChange.bind(this, i)}

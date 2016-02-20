@@ -52,7 +52,7 @@ class Card extends Component {
     e.preventDefault();
     this.setState({mouseOver: false});
     this.editTimer = setTimeout(()=>{
-      this.setState({checkListEditing: false});
+      this.setState({editing: false});
     }, 2000);
   }
 
@@ -62,13 +62,13 @@ class Card extends Component {
       <div className={styles.container}
         onMouseEnter={this.handleMouseEnter.bind(this)}
         onMouseLeave={this.handleMouseLeave.bind(this)} >
-        <div className={styles.card}>
-          <div className={styles.text} onDoubleClick={this.handleDoubleClick.bind(this)}>
+        <div className={styles.card} onDoubleClick={this.handleDoubleClick.bind(this)}>
+          <div className={styles.text}>
             {this.renderText()}
           </div>
           <CheckList cardId={data.id}
             list={data.checkList}
-            editing={this.state.checkListEditing}
+            editing={this.state.editing}
             onSave={(cardId,list)=>{updateCheckList(cardId,list)}}/>
           <div className={styles.due}>
             {this.renderDue()}
@@ -114,10 +114,8 @@ class Card extends Component {
     const { icon, removeIcon, checkIcon } = styles;
     return (
       <div>
-        <i className={ClassNames('fa', 'fa-trash-o', icon, removeIcon)}
-          onClick={this.handleRemove.bind(this)}></i>
         <i className={ClassNames('fa', 'fa-check-circle-o', icon, checkIcon)}
-          onClick={this.handleToggleEditCheck.bind(this)}></i>
+          onClick={this.handleRemove.bind(this)}></i>
       </div>
     )
   }
