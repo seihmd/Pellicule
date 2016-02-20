@@ -4,6 +4,7 @@ import Checkbox from 'material-ui/lib/checkbox';
 import IconButton from 'material-ui/lib/icon-button';
 import ClassNames from 'classnames';
 import styles from './CheckList.module.css';
+import IconClear from 'material-ui/lib/svg-icons/content/clear';
 
 class CheckList extends Component {
   constructor(props, context){
@@ -101,12 +102,11 @@ class CheckList extends Component {
             value={checkbox.name}
             onChange={this.handleTextChange.bind(this, i)}
             onKeyDown={this.handleKeyDown.bind(this)} />
-          <IconButton iconClassName="material-icons"
+          <span
             className={styles.removeCheckItem}
-            onClick={()=>{this.removeCheckItem(i)}}
-            tabIndex={-1} >
-            <i style={{fontSize:"15px"}} className={ClassNames('fa','fa-times')}></i>
-          </IconButton>
+            onClick={()=>{this.removeCheckItem(i)}}>
+            <IconClear/>
+          </span>
         </div>
       )
     } else {

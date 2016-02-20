@@ -7,6 +7,8 @@ import CheckList from './CheckList';
 import styles from './Card.module.css';
 import ClassNames from 'classnames';
 import FloatingActionButton from 'material-ui/lib/floating-action-button';
+import IconEdit from 'material-ui/lib/svg-icons/editor/mode-edit';
+import IconCheck from 'material-ui/lib/svg-icons/action/check-circle';
 
 class Card extends Component {
   constructor(props, context){
@@ -139,11 +141,11 @@ class Card extends Component {
         <span>
           <span className={ClassNames(styles.removeButton, styles.button)}
             onClick={this.handleRemove.bind(this)} >
-            <i className={ClassNames('fa','fa-check-circle-o', styles.icon, styles.removeIcon)}></i>
+            <IconCheck className={ClassNames(styles.icon, styles.removeIcon)} color={'#FF1744'}/>
           </span>
           <span className={ClassNames(styles.editButton, styles.button)}
             onClick={this.handleEditMode.bind(this)} >
-            <i className={ClassNames('fa','fa-pencil', styles.icon, styles.editIcon)}></i>
+            <IconEdit className={ClassNames(styles.icon, styles.editIcon)} color={'#1DE9B6'}/>
           </span>
         </span>
       )
