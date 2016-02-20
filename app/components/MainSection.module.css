@@ -1,14 +1,14 @@
-.container {
+.main_section {
   position: absolute;
   top: 30%;
   left: 10px;
   text-align: center;
 }
 
-.container h2 {
+.main_section h2 {
   font-size: 5rem;
 }
 
-.container a {
+.main_section a {
   font-size: 1.4rem;
 }
