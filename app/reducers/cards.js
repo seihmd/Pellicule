@@ -47,7 +47,7 @@ export default function cards(state = getInitialState(), action) {
     case Types.UPDATE_CHECKLIST:
       state = updateCheckList(state, action.cardId, action.checkList);
       if(Config.useTrello()){
-        Trello.updateCheckList(action.cardId, action.checkList);
+        Trello.updateCheckList(action.cardId, action.checkListId, action.checkList);
       } else {
         Data.updateLocalCards(state);
       }

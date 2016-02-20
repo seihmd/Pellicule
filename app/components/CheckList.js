@@ -42,7 +42,7 @@ class CheckList extends Component {
   handleUpdate(){
     const blankExcludedList = this.excludeBlank(this.state.list);
     this.setState({list: blankExcludedList})
-    this.props.onSave(this.props.cardId, blankExcludedList);
+    this.props.onSave(this.props.cardId, this.props.checkListsId, blankExcludedList);
   }
 
   handleTextChange(i, e){
@@ -116,7 +116,7 @@ class CheckList extends Component {
       return (
         <Checkbox
           labelStyle={{fontSize: "15px"}}
-          checked={checkbox.checked}
+          checked={checkbox.checked || checkbox.state === 'complete'}
           onCheck={this.handleCheckedChanged.bind(this, i)}
           label={checkbox.name} />
       )

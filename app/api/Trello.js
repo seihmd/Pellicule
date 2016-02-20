@@ -42,7 +42,6 @@ class Trello {
   getList(listId) {
     this.trello.get(`/1/lists/${listId}`, (err, list) => {
       if (err) throw err;
-      console.log(list);
       return list;
     })
   }
@@ -59,36 +58,71 @@ class Trello {
   getCards(cardId) {
     this.trello.get(`/1/cards/${cardId}/?closed=false`, (err, cards) => {
       if (err) throw err;
-      console.log(cards);
     });
   }
 
   createCheckList(cardId){
     this.trello.post(`/1/cards/${cardId}/checkLists`, (err) => {
-      console.log(err);
+      if(err) console.log(err);
     });
   }
 
   updateCardText(cardId, name){
     this.trello.put(`/1/cards/${cardId}/`, {name:name}, (err) => {
-      console.log(err);
+      if(err) console.log(err);
     });
   }
 
   updateCheckList(cardId, checkListId, checkItems){
-    console.log(cardId);
-    console.table(checkItems)
+    if(checkListId){
+      this.updateCheckListItems(cardId, checkListId, checkItems);
+    } else {
+      // add checklist to card
+      this.trello.post(`/1/cards/${cardId}/checklists`, (err, res) => {
+        if(err) console.log(err);
+        if(!err){
+          this.updateCheckListItems(cardId, res.id, checkItems)
+        }
+      });
+    }
+  }
+
+  updateCheckListItems(cardId, checkListId, checkItems){
+    const url = `/1/cards/${cardId}/checklist/${checkListId}/checkItem/`;
+    checkItems.forEach((item)=>{
+      if (item.id){
+        // update existing checkItem
+        this.trello.put(
+          url + item.id,
+          {name: item.name,
+           state: item.checked ? "complete" : "incomplete"
+          },
+          (err) => {
+            if(err) console.log(err);
+          }
+        );
+      } else {
+        // new checkItem
+        this.trello.post(
+          url,
+          {name: item.name},
+          (err) => {
+            if(err) console.log(err);
+          }
+        );
+      }
+    })
   }
 
   createCard(listId, name) {
     this.trello.post(`/1/cards/`, {name:name, due:null, idList:listId, urlSource:null}, (err) => {
-      console.log(err);
+      if(err) console.log(err);
     });
   }
 
   removeCard(cardId) {
     this.trello.del('/1/cards/' + cardId, (err) => {
-      console.log(err);
+      if(err) console.log(err);
     });
   }
 }
