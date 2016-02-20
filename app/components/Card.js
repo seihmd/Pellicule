@@ -88,17 +88,17 @@ class Card extends Component {
   render() {
     const { data, update, remove } = this.props;
     return (
-      <div className={styles.card} onDoubleClick={this.handleDoubleClick.bind(this)}>
-        <div >
+      <div className={styles.card}>
+        <div className={styles.text} onDoubleClick={this.handleDoubleClick.bind(this)}>
           {this.renderText()}
         </div>
-        <div>
+        <div className={styles.remove}>
           <input type="button" onClick={this.handleRemove.bind(this)} />
         </div>
         <div className={styles.checkList}>
           {this.renderCheckList()}
         </div>
-        <div>
+        <div className={styles.due}>
           {this.renderDue()}
         </div>
       </div>
