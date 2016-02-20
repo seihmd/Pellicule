@@ -5,8 +5,9 @@ export default localStorage.getItem(TOKEN_KEY) || TrelloToken();
 function TrelloToken() {
   const remote = require('electron').remote;
   const BrowserWindow = remote.BrowserWindow;
-  const redirect = "https%3A%2F%2Fdevelopers.trello.com/";
-  const tokenUrl = 'https://trello.com/1/connect?key=' + ApiKey.key + '&name=Pellicule&response_type=token&expiration=never&scope=read,write&return_url=' + redirect;
+  const redirect = 'https%3A%2F%2Fdevelopers.trello.com/';
+  const options = '&name=Pellicule&response_type=token&expiration=never&scope=read,write&return_url=' + redirect;
+  const tokenUrl = 'https://trello.com/1/connect?key=' + ApiKey.key + options;
 
   var win = new BrowserWindow({
     width: 800,

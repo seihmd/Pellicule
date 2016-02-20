@@ -17,7 +17,7 @@ class NewCard extends Component {
 
   handleSubmit(text){
     if(text.length > 0){
-      this.props.createNew({text:text, isLocal: true});
+      this.props.createNew({text:text, checkList: [], due: null, isLocal: true});
     }
   }
 

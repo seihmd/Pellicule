@@ -29,3 +29,10 @@ export function updateCard(card){
     card
   }
 }
+
+export function changeChecked(card){
+  return {
+    type: Types.CHANGE_CHECKED,
+    card
+  }
+}
