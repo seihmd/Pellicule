@@ -1,12 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import TextArea from './TextArea';
 import styles from './Card.module.css';
+import ClassNames from 'classnames';
 
 class Card extends Component {
   constructor(props, context){
     super(props, context);
     this.state = {
-      editing : false
+      editing : false,
+      mouseOver: false
     }
   }
 
@@ -38,6 +40,39 @@ class Card extends Component {
       return c.checked = c.id === checkId ? e.target.checked : c.checked;
     });
     this.props.update({id,text,checkList,due});
+  }
+
+  handleUseCheck(){
+    console.log('here');
+  }
+
+  handleMouseEnter(e){
+    this.setState({mouseOver: true});
+  }
+  handleMouseLeave(e){
+    this.setState({mouseOver: false});
+  }
+
+  render() {
+    const { data, update, remove } = this.props;
+    return (
+      <div className={styles.container}
+        onMouseEnter={this.handleMouseEnter.bind(this)}
+        onMouseLeave={this.handleMouseLeave.bind(this)} >
+        <div className={styles.card}>
+          <div className={styles.text} onDoubleClick={this.handleDoubleClick.bind(this)}>
+            {this.renderText()}
+          </div>
+          <div className={styles.checkList}>
+            {this.renderCheckList()}
+          </div>
+          <div className={styles.due}>
+            {this.renderDue()}
+          </div>
+          {this.renderIcons()}
+        </div>
+      </div>
+    );
   }
 
   renderText(){
@@ -85,24 +120,17 @@ class Card extends Component {
     )
   }
 
-  render() {
-    const { data, update, remove } = this.props;
+  renderIcons(){
+    if (!this.state.mouseOver) return null;
+    const { icon, removeIcon, checkIcon } = styles;
     return (
-      <div className={styles.card}>
-        <div className={styles.text} onDoubleClick={this.handleDoubleClick.bind(this)}>
-          {this.renderText()}
-        </div>
-        <div className={styles.remove}>
-          <input type="button" onClick={this.handleRemove.bind(this)} />
-        </div>
-        <div className={styles.checkList}>
-          {this.renderCheckList()}
-        </div>
-        <div className={styles.due}>
-          {this.renderDue()}
-        </div>
+      <div>
+        <i className={ClassNames('fa', 'fa-trash-o', icon, removeIcon)}
+          onClick={this.handleRemove.bind(this)}></i>
+        <i className={ClassNames('fa', 'fa-check-circle-o', icon, checkIcon)}
+          onClick={this.handleUseCheck.bind(this)}></i>
       </div>
-    );
+    )
   }
 }
 

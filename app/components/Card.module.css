@@ -1,6 +1,9 @@
+.container{
+  width: 350px;
+}
+
 .card {
-  width: 304px;
-  /*height: 70px;*/
+  width: 300px;
   background-color: #555;
   margin: 10px 0;
   padding: 10px 5px;
@@ -12,16 +15,28 @@
   margin-bottom: 10px;
 }
 
-.remove {
-  position: absolute;
-  top: 20px;
-  right: 10px;
-}
-
 .due {
   position: absolute;
   color: #555;
   bottom: 10px;
   right: 10px;
   background-color: cyan;
+}
+
+/* action icons */
+
+.removeIcon {
+  top: 20px;
+}
+
+.checkIcon{
+  font-size: 20px;
+  bottom: 30px;
+}
+
+.icon {
+  position: absolute;
+  right: -20px;
+  font-size: 20px;
+  cursor: pointer;
 }
