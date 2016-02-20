@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './containers/App';
-import MainSection from './containers/MainSection';
+import Container from './containers/Container';
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={MainSection} />
+    <IndexRoute component={Container} />
   </Route>
 );

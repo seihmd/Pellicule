@@ -1,19 +1,27 @@
 import React, { Component, PropTypes } from 'react';
-// import { Link } from 'react-router';
+import TextArea from './TextArea'
 import styles from './Card.module.css';
 
 class Card extends Component {
   static props = {
-    remove: PropTypes.func.isRequired,
-    edit: PropTypes.func.isRequired,
     text: PropTypes.string.isRequired,
   };
 
+  handleSave(){
+    if (text.length === 0) {
+      this.props.cancel(id)
+    } else {
+      this.props.update(id, text)
+    }
+    this.setState({editing: false})
+  }
+
   render() {
-    const { remove, edit, text } = this.props;
+    console.log(this.props);
+    const { data } = this.props;
     return (
       <div className={styles.card}>
-        {this.props.data.text}
+        {data.text}
       </div>
     );
   }
