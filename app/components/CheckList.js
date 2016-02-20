@@ -101,8 +101,7 @@ class CheckList extends Component {
     if(editing){
       return (
         <input type="text" value={text} idx={i}
-          onChange={this.handleTextChange.bind(this, i)}
-          onKeyDown={this.handleKeyDown.bind(this, i)}/>
+          onChange={this.handleTextChange.bind(this, i)} />
         )
     } else {
       return text;
