@@ -16,7 +16,7 @@ class NewCard extends Component {
   }
 
   handleSubmit(text){
-    if(text.length){
+    if(text.length > 0){
       this.props.createNew({text:text, isLocal: true});
     }
   }
