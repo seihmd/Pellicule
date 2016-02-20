@@ -32,11 +32,11 @@ class CheckList extends Component {
   }
 
   excludeBlank(list){
-    return list.filter( c => {return c.text !== ''});
+    return list.filter( c => {return c.name !== ''});
   }
 
   hasNoRoom(checkList){
-    return checkList.length === 0 || checkList[checkList.length-1].text !== '';
+    return checkList.length === 0 || checkList[checkList.length-1].name !== '';
   }
 
   handleUpdate(){
@@ -48,7 +48,7 @@ class CheckList extends Component {
   handleTextChange(i, e){
     const {value} = e.target;
     let checkList = this.state.list;
-    checkList[i].text = value;
+    checkList[i].name = value;
     this.setState({list: checkList});
   }
 
@@ -68,7 +68,7 @@ class CheckList extends Component {
   }
 
   handleAddList(list){
-    list.push({text: '', checked: false});
+    list.push({name: '', checked: false});
     this.setState({list});
   }
 
@@ -99,9 +99,9 @@ class CheckList extends Component {
       return (
         <div className={styles.editCheckItem}>
           <TextField
-            className={styles.text}
+            className={styles.name}
             hintText={"checklist"}
-            value={checkbox.text}
+            value={checkbox.name}
             onChange={this.handleTextChange.bind(this, i)}
             onKeyDown={this.handleKeyDown.bind(this)} />
           <IconButton iconClassName="material-icons"
@@ -118,7 +118,7 @@ class CheckList extends Component {
           labelStyle={{fontSize: "15px"}}
           checked={checkbox.checked}
           onCheck={this.handleCheckedChanged.bind(this, i)}
-          label={checkbox.text} />
+          label={checkbox.name} />
       )
     }
   }

@@ -49,7 +49,7 @@ class Trello {
 
   getCardsInList(listId) {
     return new Promise((resolve) => {
-      this.trello.get(`/1/lists/${listId}/cards`, (err, cards) => {
+      this.trello.get(`/1/lists/${listId}/cards?checklists=all`, (err, cards) => {
         if (err) throw err;
         resolve(cards);
       })
@@ -63,10 +63,6 @@ class Trello {
     });
   }
 
-  getCheckList(cardId) {
-    this.trello.get(`/1/cards/${cardId}/checklists?closed=false`, (err, checkList) => {
-      if (err) throw err;
-      console.log(checkList);
     });
   }
 

@@ -16,12 +16,14 @@ export function getTrelloCards() {
     if (Config.useTrello() && Config.selectedList()) {
       Trello.getCardsInList(Config.selectedList()).then((cards) => {
         cards.forEach((card) => {
+          const checkList = card.checklists.length > 0 ? card.checklists[0].checkItems : [];
+          const checkListId = card.checklists.length > 0 ? card.checklists[0].id : null;
           state.push({
             id: card.id,
             text: card.name,
-            checkList: card.checkItems,
-            due: card.due,
-            isLocal: false
+            checkList: checkList,
+            checkListsId: checkListId,
+            due: card.due
           });
         });
         resolve(state);
