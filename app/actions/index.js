@@ -23,10 +23,11 @@ export function removeCard(id) {
   }
 }
 
-export function updateCard(card){
+export function updateCard(cardId, text){
   return {
     type: Types.UPDATE_CARD,
-    card
+    cardId,
+    text
   }
 }
 

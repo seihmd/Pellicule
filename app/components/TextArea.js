@@ -10,7 +10,11 @@ class TextArea extends Component {
     }
   }
 
-  handleChange(e) {
+  componentWillUnmount(){
+    this.saveText();
+  }
+
+  handleTextChange(e) {
     this.setState({ text: e.target.value })
   }
 
@@ -19,11 +23,17 @@ class TextArea extends Component {
       return;
     } else {
       e.preventDefault();
-      const text = e.target.value.trim();
-      if (text.length > 0) {
-        this.props.onSave(text);
-        this.setState({text: ''});
-      }
+      this.saveText();
+    }
+  }
+
+  saveText(){
+    const text = this.state.text;
+    if (text.length > 0) {
+      this.props.onSave(this.props.id, text);
+      this.setState({text: ''});
+    } else {
+      this.props.onRemove(this.props.id);
     }
   }
 
@@ -39,7 +49,7 @@ class TextArea extends Component {
           multiLine={true}
           autoFocus="false"
           value={this.state.text}
-          onChange={this.handleChange.bind(this)}
+          onChange={this.handleTextChange.bind(this)}
           onKeyDown={this.handleSubmit.bind(this)}/>
       </div>
     )

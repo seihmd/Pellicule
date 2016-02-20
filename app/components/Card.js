@@ -6,6 +6,7 @@ import CardText from 'material-ui/lib/card/card-text';
 import CheckList from './CheckList';
 import styles from './Card.module.css';
 import ClassNames from 'classnames';
+import FloatingActionButton from 'material-ui/lib/floating-action-button';
 
 class Card extends Component {
   constructor(props, context){
@@ -22,22 +23,8 @@ class Card extends Component {
     update: PropTypes.func.isRequired,
   };
 
-  handleRemove(){
-    this.props.remove(this.props.data.id);
-  }
-
   handleEditMode(){
     this.setState({editing: true})
-  }
-
-  handleTextUpdate(text){
-    if(text.length === 0){
-      this.handleRemove();
-    } else {
-      const {id, checkList, due} = this.props.data;
-      this.props.update({id,text,checkList,due});
-      this.setState({editing: false});
-    }
   }
 
   handleCheckListUpdate(cardId, checkList){
@@ -55,6 +42,7 @@ class Card extends Component {
     this.setState({mouseOver: true});
     clearTimeout(this.editTimer);
   }
+
   handleMouseLeave(e){
     e.stopPropagation();
     e.preventDefault();
@@ -96,17 +84,24 @@ class Card extends Component {
   }
 
   renderText(){
-      const text = this.props.data.text;
+      const {id, text} = this.props.data;
       const cardTextStyle={
         fontSize: '18px'
       }
       if(this.state.editing){
-        return (<TextArea text={text} onSave={(text) => { this.handleTextUpdate(text)} } />)
+        return (
+          <TextArea
+            text={text}
+            id={id}
+            onRemove={this.props.remove}
+            onSave={this.props.update} />)
       } else {
-        return (<CardText style={cardTextStyle}
-                  onDoubleClick={this.handleEditMode.bind(this)}>
-                  {text}
-                </CardText>);
+        return (
+          <CardText
+            style={cardTextStyle}
+            onDoubleClick={this.handleEditMode.bind(this)}>
+            {text}
+          </CardText> );
       }
     }
 
@@ -136,18 +131,13 @@ class Card extends Component {
       const { icon, removeIcon, checkIcon } = styles;
       return (
         <span>
-          <span className={ClassNames(styles.removeButton, styles.button)}>
-            <RaisedButton
-              primary={true}
-              onClick={this.handleRemove.bind(this)} >　　
-              <i className={ClassNames('fa','fa-check-circle-o', styles.icon)}></i>
-            </ RaisedButton>
+          <span className={ClassNames(styles.removeButton, styles.button)}
+            onClick={this.handleRemove.bind(this)} >
+            <i className={ClassNames('fa','fa-check-circle-o', styles.icon, styles.removeIcon)}></i>
           </span>
-          <span className={ClassNames(styles.editButton, styles.button)}>
-            <RaisedButton secondary={true}
-              onClick={this.handleEditMode.bind(this)} >　　
-              <i className={ClassNames('fa','fa-pencil', styles.icon)}></i>
-            </ RaisedButton>
+          <span className={ClassNames(styles.editButton, styles.button)}
+            onClick={this.handleEditMode.bind(this)} >
+            <i className={ClassNames('fa','fa-pencil', styles.icon, styles.editIcon)}></i>
           </span>
         </span>
       )

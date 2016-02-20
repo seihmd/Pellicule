@@ -27,8 +27,8 @@ export default function cards(state = getInitialState(), action) {
       return state;
 
     case Types.UPDATE_CARD:
-      state = updateCard(state, action.card)
       Data.updateLocalCards(state);
+      state = updateCard(state, action.cardId, action.text);
       return state;
 
     case Types.UPDATE_CHECKLIST:
@@ -60,10 +60,11 @@ function removeCard(state, id) {
   });
 }
 
-function updateCard(state, editCard) {
-  return state.map(card => {
-    return card.id === editCard.id ? Object.assign({}, editCard) : card;
+function updateCard(state, cardId, text) {
+  state.forEach(card => {
+    if (card.id === cardId) card.text = text;
   });
+  return state;
 }
 
 function updateCheckList(state, cardId, checkList){
