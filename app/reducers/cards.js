@@ -41,12 +41,11 @@ export default function cards(state = getInitialState(), action) {
 }
 
 function addCard(state, card) {
-  // TODO ID may be able to be random char string
   const {text, checkList, isLocal} = card;
   return [{
-      id: (state.reduce((card, next) => {
-        return card.id > next.id ? card : next
-      })).id + 1,
+      id: state.length === 0
+        ? 1
+        : (state.reduce((card, next) => {return card.id > next.id ? card : next})).id + 1,
       text,
       checkList,
       isLocal: true,
