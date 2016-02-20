@@ -1,5 +1,10 @@
+.newCardContainer{
+  position: relative;
+  width: 350px;
+}
+
 .new_card {
-  width: 200px;
-  height: 70px;
-  background-color: black;
+  width: 300px;
+  margin: 10px;
+  padding: 10px 5px;
 }

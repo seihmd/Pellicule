@@ -5,8 +5,10 @@ import { Router } from 'react-router';
 import routes from './routes';
 import configureStore from './store/configureStore';
 import './app.css';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
 const store = configureStore();
+injectTapEventPlugin();
 
 render(
   <Provider store={store}>

@@ -1,5 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import TextArea from './TextArea';
+import CardElm from 'material-ui/lib/card/card';
+import RaisedButton from 'material-ui/lib/raised-button';
+import CardText from 'material-ui/lib/card/card-text';
 import CheckList from './CheckList';
 import styles from './Card.module.css';
 import ClassNames from 'classnames';
@@ -23,7 +26,7 @@ class Card extends Component {
     this.props.remove(this.props.data.id);
   }
 
-  handleDoubleClick(){
+  handleEditMode(){
     this.setState({editing: true})
   }
 
@@ -35,6 +38,11 @@ class Card extends Component {
       this.props.update({id,text,checkList,due});
       this.setState({editing: false});
     }
+  }
+
+  handleCheckListUpdate(cardId, checkList){
+    this.props.updateCheckList(cardId,checkList);
+    this.setState({editing: false});
   }
 
   handleToggleEditCheck(){
@@ -53,72 +61,98 @@ class Card extends Component {
     this.setState({mouseOver: false});
     this.editTimer = setTimeout(()=>{
       this.setState({editing: false});
-    }, 2000);
+    }, 1000);
   }
 
   render() {
-    const { data, update, remove, updateCheckList } = this.props;
+    const { data, update, remove } = this.props;
+    const cardStyle = {
+      width: '300px',
+      margin: '10px',
+      padding: '10px'
+    };
+
     return (
-      <div className={styles.container}
+      <div className={styles.card}
         onMouseEnter={this.handleMouseEnter.bind(this)}
-        onMouseLeave={this.handleMouseLeave.bind(this)} >
-        <div className={styles.card} onDoubleClick={this.handleDoubleClick.bind(this)}>
-          <div className={styles.text}>
-            {this.renderText()}
-          </div>
-          <CheckList cardId={data.id}
-            list={data.checkList}
-            editing={this.state.editing}
-            onSave={(cardId,list)=>{updateCheckList(cardId,list)}}/>
-          <div className={styles.due}>
-            {this.renderDue()}
-          </div>
-          {this.renderIcons()}
-        </div>
+        onMouseLeave={this.handleMouseLeave.bind(this)}>
+      <CardElm
+        style={cardStyle}>
+        {this.renderText()}
+        {this.renderCheckList()}
+      </CardElm>
+      {this.renderIcons()}
       </div>
     );
   }
+  renderCheckList(){
+    const {data} = this.props;
+    return (
+      <CheckList cardId={data.id}
+        list={data.checkList}
+        editing={this.state.editing}
+        onSave={this.handleCheckListUpdate.bind(this)}/>
+    )
+  }
 
   renderText(){
-    const text = this.props.data.text;
-    if(this.state.editing){
-      return (<TextArea text={text} onSave={(text) => { this.handleTextUpdate(text)} } />)
-    } else {
-      return text;
+      const text = this.props.data.text;
+      const cardTextStyle={
+        fontSize: '18px',
+        color: 'white'
+      }
+      if(this.state.editing){
+        return (<TextArea text={text} onSave={(text) => { this.handleTextUpdate(text)} } />)
+      } else {
+        return (<CardText style={cardTextStyle}
+                  onDoubleClick={this.handleEditMode.bind(this)}>
+                  {text}
+                </CardText>);
+      }
     }
-  }
 
-  renderDue(){
-    let {due} = this.props.data;
-    if(!due) return;
-    const time = {
-      yyyy: due.slice(0,4),
-      MM  : due.slice(5,7),
-      dd  : due.slice(8,10),
-      HH  : due.slice(11,13),
-      mm  : due.slice(14,16)
-    };
-    let dueText = `${time.MM}/${time.dd} ${time.HH}:${time.mm}`;
-    if(time.yyyy != new Date().getFullYear()){
-      dueText = time.yyyy + '/' + dueText;
+    renderDue(){
+      let {due} = this.props.data;
+      if(!due) return;
+      const time = {
+        yyyy: due.slice(0,4),
+        MM  : due.slice(5,7),
+        dd  : due.slice(8,10),
+        HH  : due.slice(11,13),
+        mm  : due.slice(14,16)
+      };
+      let dueText = `${time.MM}/${time.dd} ${time.HH}:${time.mm}`;
+      if(time.yyyy != new Date().getFullYear()){
+        dueText = time.yyyy + '/' + dueText;
+      }
+      return (
+        <div>
+          {dueText}
+        </div>
+      )
     }
-    return (
-      <div>
-        {dueText}
-      </div>
-    )
-  }
 
-  renderIcons(){
-    if (!this.state.mouseOver) return null;
-    const { icon, removeIcon, checkIcon } = styles;
-    return (
-      <div>
-        <i className={ClassNames('fa', 'fa-check-circle-o', icon, checkIcon)}
-          onClick={this.handleRemove.bind(this)}></i>
-      </div>
-    )
-  }
+    renderIcons(){
+      if (!this.state.mouseOver || this.state.editing) return null;
+      const { icon, removeIcon, checkIcon } = styles;
+      return (
+        <span>
+          <span className={ClassNames(styles.removeButton, styles.button)}>
+            <RaisedButton
+              primary={true}
+              onClick={this.handleRemove.bind(this)} >　　
+              <i className={ClassNames('fa','fa-check-circle-o', styles.icon)}></i>
+            </ RaisedButton>
+          </span>
+          <span className={ClassNames(styles.editButton, styles.button)}>
+            <RaisedButton secondary={true}
+              onClick={this.handleEditMode.bind(this)} >　　
+              <i className={ClassNames('fa','fa-pencil', styles.icon)}></i>
+            </ RaisedButton>
+          </span>
+        </span>
+      )
+    }
 }
 
 export default Card;

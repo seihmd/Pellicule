@@ -2,11 +2,9 @@
   width: 350px;
 }
 .card {
-  width: 300px;
-  background-color: #555;
-  margin: 10px 0;
-  padding: 10px 5px;
   position: relative;
+  width: 350px;
+  z-index: 100;
 }
 .text {
   font-size: 20px;
@@ -21,15 +19,23 @@
 }
 
 /* action icons */
-.removeIcon {
-  top: 10px;
-}
-.checkIcon {
-  top: 30px;
-}
-.icon {
+.button {
+  color: white;
+  font-size: 25px;
   position: absolute;
-  right: -20px;
+  right: 0px;
+  z-index:-1;
+}
+
+.removeButton{
+  top: 20px;
+}
+
+.editButton{
+  top: 60px;
+}
+
+.icon{
   font-size: 20px;
-  cursor: pointer;
+  color: #222;
 }

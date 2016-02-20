@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import styles from './CheckList.module.css';
-import ClassNames from 'classnames';
+import TextField from 'material-ui/lib/text-field';
+import Checkbox from 'material-ui/lib/checkbox';
 
 class CheckList extends Component {
   constructor(props, context){
@@ -8,6 +8,18 @@ class CheckList extends Component {
     this.state = {
       list: this.props.list || [],
       editing: this.props.editing || false
+    };
+    this.checkLabelStyle ={
+      fontSize: '15px'
+    }
+    this.checkTextStyle={
+      width: '235px',
+      fontSize: '15px',
+      margin: '0 20px',
+      marginTop:'0',
+      marginBottom:'0',
+      height: '30px',
+      verticalAlign:'-webkit-baseline-middle'
     }
   }
   static props = {
@@ -59,14 +71,9 @@ class CheckList extends Component {
     }
   }
 
-  handleKeyDown(i,e){
-    // TODO Should TAB key accepted?
+  handleKeyDown(e){
     if(e.which !== 13) return;
-    let {list} = this.state;
-    if(list.length-1 === i){
-      list.push({text: '', checked:false});
-      this.setState({list});
-    }
+    this.handleUpdate();
   }
 
   handleAddList(list){
@@ -81,36 +88,33 @@ class CheckList extends Component {
       <div>
         {list.map((c,i)=>{
           return (
-            <div key={i}>
-              {this.renderCheckList(c.checked,i,editing)}
-              {this.renderText(c.text,i,editing)}
-            </div>
+            <span key={i}>
+              {this.renderCheckbox(c,i,editing)}
+            </span>
           )
         })}
       </div>
     );
   }
 
-  renderCheckList(checked,i,editing){
-    if(!editing){
-      return (
-        <label>
-          <input type="checkbox" idx={i}
-            checked={checked}
-            onChange={this.handleCheckedChanged.bind(this, i)} />
-        </label>
-      )
-    }
-  }
-
-  renderText(text,i,editing){
+  renderCheckbox(checkbox,i,editing){
     if(editing){
       return (
-        <input type="text" value={text} idx={i}
-          onChange={this.handleTextChange.bind(this, i)} />
-        )
+        <TextField
+          style={this.checkTextStyle}
+          hintText={"checklist"}
+          value={checkbox.text}
+          onChange={this.handleTextChange.bind(this, i)}
+          onKeyDown={this.handleKeyDown.bind(this)} />
+      )
     } else {
-      return text;
+      return (
+        <Checkbox
+          labelStyle={this.checkLabelStyle}
+          checked={checkbox.checked}
+          onCheck={this.handleCheckedChanged.bind(this, i)}
+          label={checkbox.text} />
+      )
     }
   }
 }

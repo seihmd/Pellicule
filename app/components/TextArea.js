@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import TextField from 'material-ui/lib/text-field';
 import styles from './TextArea.module.css';
-// import classnames from 'classnames'
 
 class TextArea extends Component {
   constructor(props, context) {
@@ -29,12 +29,19 @@ class TextArea extends Component {
 
   render() {
     const { text, createNew } = this.props;
+    const hintText = this.props.hintText || '';
     return (
-      <textarea className={styles.textarea}
-        autoFocus="false"
-        value={this.state.text}
-        onChange={this.handleChange.bind(this)}
-        onKeyDown = {this.handleSubmit.bind(this)}/>
+      <div className={styles.textarea}>
+        <TextField
+          hintText={hintText}
+          rows={1}
+          rowsMax={4}
+          multiLine={true}
+          autoFocus="false"
+          value={this.state.text}
+          onChange={this.handleChange.bind(this)}
+          onKeyDown={this.handleSubmit.bind(this)}/>
+      </div>
     )
   }
 }

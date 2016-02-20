@@ -1,9 +1,5 @@
 .textarea {
-  width: 300px;
+  width: 290px;
   font-size: 20px;
-  background-color: #555;
-  color: white;
-  outline: none;
-  border: none;
-  resize: none;
+  margin: 0 10px;
 }
