@@ -1,6 +1,7 @@
 import * as Types from '../utils/ActionTypes';
 import * as Data from '../api/Data';
 import Config from '../utils/Config';
+import Trello from '../api/Trello';
 
 function getInitialState(){
   return Config.useTrello() && Config.userToken() !== '' ? [] : Data.getLocalCards();
@@ -18,23 +19,38 @@ export default function cards(state = getInitialState(), action) {
 
     case Types.ADD_CARD:
       state = addCard(state, action.newCard);
-      Data.updateLocalCards(state);
+      if(Config.useTrello()){
+        Trello.createCard(Config.selectedList(), action.newCard.text);
+      } else {
+        Data.updateLocalCards(state);
+      }
       return state;
 
     case Types.REMOVE_CARD:
       state = removeCard(state, action.id);
-      Data.updateLocalCards(state);
+      if(Config.useTrello()){
+        Trello.removeCard(action.id);
+      } else {
+        Data.updateLocalCards(state);
+      }
       return state;
 
     case Types.UPDATE_CARD:
-      Data.updateLocalCards(state);
       state = updateCard(state, action.cardId, action.text);
+      if(Config.useTrello()){
+        Trello.updateCardText(action.cardId, action.text);
+      } else {
+        Data.updateLocalCards(state);
+      }
       return state;
 
     case Types.UPDATE_CHECKLIST:
       state = updateCheckList(state, action.cardId, action.checkList);
-      Data.updateLocalCards(state)
-
+      if(Config.useTrello()){
+        Trello.updateCheckList(action.cardId, action.checkList);
+      } else {
+        Data.updateLocalCards(state);
+      }
     default:
       return state;
   }

@@ -63,12 +63,34 @@ class Trello {
     });
   }
 
+  createCheckList(cardId){
+    this.trello.post(`/1/cards/${cardId}/checkLists`, (err) => {
+      console.log(err);
     });
   }
 
-  addCard(boardId, card) {}
+  updateCardText(cardId, name){
+    this.trello.put(`/1/cards/${cardId}/`, {name:name}, (err) => {
+      console.log(err);
+    });
+  }
 
-  removeCard(boardId, cardId) {}
+  updateCheckList(cardId, checkListId, checkItems){
+    console.log(cardId);
+    console.table(checkItems)
+  }
+
+  createCard(listId, name) {
+    this.trello.post(`/1/cards/`, {name:name, due:null, idList:listId, urlSource:null}, (err) => {
+      console.log(err);
+    });
+  }
+
+  removeCard(cardId) {
+    this.trello.del('/1/cards/' + cardId, (err) => {
+      console.log(err);
+    });
+  }
 }
 
 export default new Trello();
