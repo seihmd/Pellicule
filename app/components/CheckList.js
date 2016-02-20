@@ -10,7 +10,6 @@ class CheckList extends Component {
       editing: this.props.editing || false
     }
   }
-
   static props = {
     onSave: PropTypes.func.isRequired,
   };
@@ -22,6 +21,16 @@ class CheckList extends Component {
       this.handleUpdate();
     }
   }
+  componentWillUpdate(newProps){
+    const {editing, list} = newProps;
+    if(editing && this.hasNoRoom(list)){
+      this.handleAddList(list);
+    }
+  }
+
+  hasNoRoom(checkList){
+    return checkList.length === 0 || checkList[checkList.length-1].text !== '';
+  }
 
   handleUpdate(){
     this.props.onSave(this.props.cardId, this.state.list);
@@ -31,7 +40,7 @@ class CheckList extends Component {
     const {value} = e.target;
     let checkList = this.state.list;
     checkList[i].text = value;
-    this.setState({list: checkList.filter((c)=>{return c.text !== ''})});
+    this.setState({list: checkList});
   }
 
   handleCheckedChanged(i,e){
@@ -54,11 +63,14 @@ class CheckList extends Component {
     }
   }
 
+  handleAddList(list){
+    list.push({text: '', checked: false});
+    this.setState({list});
+  }
+
   render() {
-    const { list, editing } = this.props;
-    if(editing && list.length === 0){
-      list.push({text: '', checked: false});
-    }
+    const { editing } = this.props;
+    const { list } = this.state;
     return (
       <div>
         {list.map((c,i)=>{
@@ -67,8 +79,7 @@ class CheckList extends Component {
               {this.renderCheckList(c.checked,i,editing)}
               {this.renderText(c.text,i,editing)}
             </div>
-
-        )
+          )
         })}
       </div>
     );
