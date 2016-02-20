@@ -1,7 +1,6 @@
-.container{
+.container {
   width: 350px;
 }
-
 .card {
   width: 300px;
   background-color: #555;
@@ -9,12 +8,10 @@
   padding: 10px 5px;
   position: relative;
 }
-
 .text {
   font-size: 20px;
   margin-bottom: 10px;
 }
-
 .due {
   position: absolute;
   color: #555;
@@ -24,16 +21,12 @@
 }
 
 /* action icons */
-
 .removeIcon {
-  top: 20px;
+  top: 10px;
 }
-
-.checkIcon{
-  font-size: 20px;
-  bottom: 30px;
+.checkIcon {
+  top: 30px;
 }
-
 .icon {
   position: absolute;
   right: -20px;

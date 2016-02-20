@@ -15,9 +15,10 @@ class CheckList extends Component {
     onSave: PropTypes.func.isRequired,
   };
 
-  componentDidUpdate(prevProps, prevState){
-    if(this.props.editing === false && prevProps.editing === true){
-      // TODO Should not save when unchanged
+  componentWillReceiveProps(newProps){
+    const {list, editing} = newProps;
+    this.setState({list, editing});
+    if(this.props.editing && !editing){
       this.handleUpdate();
     }
   }
@@ -30,7 +31,7 @@ class CheckList extends Component {
     const {value} = e.target;
     let checkList = this.state.list;
     checkList[i].text = value;
-    this.setState({list: checkList});
+    this.setState({list: checkList.filter((c)=>{return c.text !== ''})});
   }
 
   handleCheckedChanged(i,e){
@@ -43,8 +44,21 @@ class CheckList extends Component {
     }
   }
 
+  handleKeyDown(i,e){
+    // TODO Should TAB key accepted?
+    if(e.which !== 13) return;
+    let {list} = this.state;
+    if(list.length-1 === i){
+      list.push({text: '', checked:false});
+      this.setState({list});
+    }
+  }
+
   render() {
     const { list } = this.props;
+    if(this.state.editing && list.length === 0){
+      list.push({text: '', checked: false});
+    }
     return (
       <div>
         {list.map((c,i)=>{
@@ -69,7 +83,8 @@ class CheckList extends Component {
     if(this.props.editing){
       return (
         <input type="text" value={text} idx={i}
-          onChange={this.handleTextChange.bind(this, i)} />
+          onChange={this.handleTextChange.bind(this, i)}
+          onKeyDown={this.handleKeyDown.bind(this, i)}/>
         )
     } else {
       return text;

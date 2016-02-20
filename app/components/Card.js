@@ -12,6 +12,7 @@ class Card extends Component {
       mouseOver: false,
       checkListEditing: false
     }
+    this.editTimer = null;
   }
 
   static props = {
@@ -37,19 +38,22 @@ class Card extends Component {
   }
 
   handleToggleEditCheck(){
-    this.setState({checkListEditing: !this.state.checkEditing});
+    this.setState({checkListEditing: !this.state.checkListEditing});
   }
 
   handleMouseEnter(e){
     e.stopPropagation();
     e.preventDefault();
     this.setState({mouseOver: true});
+    clearTimeout(this.editTimer);
   }
   handleMouseLeave(e){
     e.stopPropagation();
     e.preventDefault();
     this.setState({mouseOver: false});
-    setTimeout(()=>{this.setState({checkListEditing: false})}, 1000);
+    this.editTimer = setTimeout(()=>{
+      this.setState({checkListEditing: false});
+    }, 2000);
   }
 
   render() {
@@ -107,7 +111,6 @@ class Card extends Component {
 
   renderIcons(){
     if (!this.state.mouseOver) return null;
-    // const useCheck = this.state.useCheck ? styles.useCheck : null;
     const { icon, removeIcon, checkIcon } = styles;
     return (
       <div>
