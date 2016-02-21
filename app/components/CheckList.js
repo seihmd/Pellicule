@@ -53,7 +53,7 @@ class CheckList extends Component {
   handleCheckedChanged(i,e){
     const {checked} = e.target;
     let checkList = this.state.list;
-    checkList[i].checked = checked;
+    checkList[i].state = checked ? 'complete' : 'incomplete';
     this.setState({list: checkList});
     if(!this.state.editing){
       this.handleUpdate();
@@ -66,7 +66,7 @@ class CheckList extends Component {
   }
 
   handleAddList(list){
-    list.push({name: '', checked: false});
+    list.push({name: '', state: 'incomplete'});
     this.setState({list});
   }
 
@@ -113,7 +113,7 @@ class CheckList extends Component {
       return (
         <Checkbox
           labelStyle={{fontSize: "15px"}}
-          checked={checkbox.checked || checkbox.state === 'complete'}
+          checked={checkbox.state === 'complete'}
           onCheck={this.handleCheckedChanged.bind(this, i)}
           label={checkbox.name} />
       )

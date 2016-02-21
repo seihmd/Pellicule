@@ -95,7 +95,7 @@ class Trello {
         this.trello.put(
           url + item.id,
           {name: item.name,
-           state: item.checked ? "complete" : "incomplete"
+           state: item.state
           },
           (err) => {
             if(err) console.log(err);
