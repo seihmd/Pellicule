@@ -9,6 +9,8 @@ const Tray = electron.Tray;
 const crashReporter = electron.crashReporter;
 const shell = electron.shell;
 const ipcMain = electron.ipcMain;
+const path = require('path');
+const iconPlain = path.join(__dirname, 'icon.png');
 
 let menu;
 let template;
@@ -34,7 +36,7 @@ function showSetting() {
 }
 
 app.on('ready', () => {
-  appIcon = new Tray('./icon.png');
+  appIcon = new Tray(iconPlain);
   const contextMenu = Menu.buildFromTemplate([{
     label: 'View',
     type: 'normal',
