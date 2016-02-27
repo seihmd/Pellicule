@@ -48,7 +48,9 @@ app.on('ready', () => {
   }, {
     label: 'Reload',
     type: 'normal',
-    click: ()=>{mainWindow.restart();},
+    click: ()=>{
+      mainWindow.reload();
+    },
   }]);
   appIcon.setToolTip('Pellicule');
   appIcon.setContextMenu(contextMenu);
