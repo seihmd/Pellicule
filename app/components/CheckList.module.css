@@ -9,8 +9,9 @@
   width: 20px !important;
   height: 20px !important;
   position: absolute;
-  right: -250px;
-  top: -40px;
+  right: 15px;
+  top: 10px;
+  cursor: pointer;;
 }
 
 .name {

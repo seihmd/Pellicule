@@ -1,4 +1,5 @@
 body {
   font-family: 'Roboto', Arial, Helvetica, Helvetica Neue;
   overflow-y: scroll;
+  overflow-x: hidden;
 }

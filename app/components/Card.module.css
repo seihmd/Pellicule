@@ -20,22 +20,23 @@
 
 /* action icons */
 .button {
-  color: white;
-  font-size: 25px;
   position: absolute;
-  right: 0px;
-  z-index:-1;
+  top: 3px;
+  cursor: pointer;
 }
-
-.removeButton{
-  top: 20px;
+.removeButton {
+  right: 50px;
+  top: 4px;
 }
-
-.editButton{
-  top: 60px;
+.removeIcon {
+  color: #EC407A;
 }
-
-.icon{
+.editButton {
+  right: 80px;
+}
+.editIcon {
+  color: #1DE9B6;
+}
+.icon {
   font-size: 20px;
-  color: #222;
 }
