@@ -62,7 +62,8 @@ class Card extends Component {
     const cardStyle = {
       width: '300px',
       margin: '10px',
-      padding: '10px'
+      padding: '10px',
+      boxShadow: '0',
     };
 
     return (

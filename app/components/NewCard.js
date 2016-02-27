@@ -31,7 +31,9 @@ class NewCard extends Component {
   render() {
     return (
       <div className={styles.newCardContainer}>
-      <Card className={styles.new_card} >
+      <Card
+        className={styles.new_card}
+        style={{'boxShadow':'0'}}>
           <TextField
             hintText={"New Card"}
             rows={1}
