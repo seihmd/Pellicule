@@ -37,9 +37,12 @@ class Card extends Component {
     this.setState({checkListEditing: !this.state.checkListEditing});
   }
 
-  handleMouseEnter(e){
+  handleMouseOver(e){
     e.stopPropagation();
     e.preventDefault();
+    if(this.state.mouseOver){
+      return;
+    }
     this.setState({mouseOver: true});
     clearTimeout(this.editTimer);
   }
@@ -68,7 +71,7 @@ class Card extends Component {
 
     return (
       <div className={styles.card}
-        onMouseEnter={this.handleMouseEnter.bind(this)}
+        onMouseOver={this.handleMouseOver.bind(this)}
         onMouseLeave={this.handleMouseLeave.bind(this)}>
       <CardElm
         style={cardStyle}>
