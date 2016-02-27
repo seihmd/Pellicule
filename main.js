@@ -34,7 +34,7 @@ function showSetting() {
   }
   mainWindow.webContents.send('show-setting');
 }
-
+app.dock.hide();
 app.on('ready', () => {
   appIcon = new Tray(iconPlain);
   const contextMenu = Menu.buildFromTemplate([{
@@ -61,10 +61,10 @@ app.on('ready', () => {
   appIcon.setToolTip('Pellicule');
   appIcon.setContextMenu(contextMenu);
   mainWindow = new BrowserWindow({
-    width: 1024,
-    height: 728,
-    //  transparent: true,
-    //  frame: false,
+    width: 340,
+    height: 9999,
+    transparent: true,
+    frame: false,
     x: 9999,
     y: 0
   });
@@ -87,7 +87,7 @@ app.on('ready', () => {
     mainWindow.openDevTools();
   }
 
-  if (process.platform === 'darwin') {
+  if (process.platform === 'darwin' && process.env.NODE_ENV === 'development') {
     template = [{
       label: 'Edit',
       submenu: [{
