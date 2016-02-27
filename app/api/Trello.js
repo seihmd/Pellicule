@@ -115,7 +115,7 @@ class Trello {
   }
 
   createCard(listId, name) {
-    this.trello.post(`/1/cards/`, {name:name, due:null, idList:listId, urlSource:null}, (err) => {
+    this.trello.post(`/1/cards/`, {name:name, due:null, idList:listId, urlSource:null, pos:'top'}, (err) => {
       if(err) console.log(err);
     });
   }
