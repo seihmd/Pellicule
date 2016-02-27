@@ -38,9 +38,15 @@ function showSetting() {
 app.on('ready', () => {
   appIcon = new Tray(iconPlain);
   const contextMenu = Menu.buildFromTemplate([{
-    label: 'View',
+    label: 'Toggle',
     type: 'normal',
-    selector: 'hide:'
+    click: ()=>{
+      if (mainWindow.isVisible()){
+        mainWindow.hide()
+      } else {
+        mainWindow.show()
+      }
+    }
   }, {
     label: 'Setting',
     type: 'normal',
