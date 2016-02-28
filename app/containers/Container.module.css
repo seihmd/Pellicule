@@ -1,0 +1,13 @@
+.container {
+  position: absolute;
+  width: 320px;
+  height: 100%;
+}
+
+.darkTheme {
+  background-color: #303030;
+}
+
+.lightTheme {
+  background-color: #fff;
+}

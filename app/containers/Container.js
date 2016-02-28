@@ -6,6 +6,8 @@ import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import LightTheme from 'material-ui/lib/styles/raw-themes/light-raw-theme';
 import DarkTheme from 'material-ui/lib/styles/raw-themes/dark-raw-theme';
 import Config from '../utils/Config';
+import styles from './Container.module.css';
+import ClassNames from 'classnames';
 
 export default class App extends Component {
   static propTypes = {
@@ -25,8 +27,9 @@ export default class App extends Component {
   }
 
   render() {
+    const theme = Config.useDarkTheme() ? 'darkTheme' : 'lightTheme';
     return (
-      <div>
+      <div className={ClassNames(styles.container, styles[theme])}>
         <NewCardContainer />
         <SettingContainer />
         <CardsContainer />

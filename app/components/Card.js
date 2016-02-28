@@ -38,8 +38,8 @@ class Card extends Component {
   }
 
   handleMouseOver(e){
-    e.stopPropagation();
-    e.preventDefault();
+    // e.stopPropagation();
+    // e.preventDefault();
     if(this.state.mouseOver){
       return;
     }
@@ -66,7 +66,6 @@ class Card extends Component {
       width: '300px',
       margin: '10px',
       padding: '10px',
-      boxShadow: '0',
     };
 
     return (
